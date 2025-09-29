@@ -8,7 +8,7 @@ class KnockSenseApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const bg = Color(0xFFF6F7FA); // light grey like your mock
+    const bg = const Color(0xFFF7F8FB);
     return MaterialApp(
       title: 'KnockSense',
       debugShowCheckedModeBanner: false,
