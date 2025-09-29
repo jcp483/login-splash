@@ -36,11 +36,11 @@ class _SplashRootState extends State<SplashRoot> with TickerProviderStateMixin {
 
   // Slower timings & distinct sizes per frame
   static const _phaseDurations = <Duration>[
-    Duration(milliseconds: 650),
-    Duration(milliseconds: 650),
-    Duration(milliseconds: 650),
-    Duration(milliseconds: 900), // title fade-in
     Duration(milliseconds: 800),
+    Duration(milliseconds: 600),
+    Duration(milliseconds: 300),
+    Duration(milliseconds: 1100), // title fade-in
+    Duration(milliseconds: 1200),
   ];
   static const _sizes = <double>[116, 204, 204, 204, 204];
 
@@ -51,10 +51,21 @@ class _SplashRootState extends State<SplashRoot> with TickerProviderStateMixin {
       vsync: this,
       duration: const Duration(milliseconds: 450),
     );
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+    final frames = const [
+      'assets/logo_stage1.png',
+      'assets/logo_stage2.png',
+      'assets/logo_stage3.png',
+      'assets/logo_badge.png',
+    ];
+    for (final p in frames) {
+      await precacheImage(AssetImage(p), context);
+    }
+    // tiny safety buffer
+    await Future.delayed(const Duration(milliseconds: 80));
     _runSplashSequence();
-
-  }
-
+  });
+}
   void _runSplashSequence() {
   int i = 0;
   void step() {
